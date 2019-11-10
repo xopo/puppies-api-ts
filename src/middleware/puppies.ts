@@ -5,7 +5,7 @@ import { IStore } from 'src/types/types';
 import * as util from 'util';
 
 const readFileSync = util.promisify(fs.readFile);
-const storePath = path.join(__dirname, '../../store/store.json');
+const storePath = path.join(__dirname, '/../../store/store.json');
 
 const getStoreData = async (): Promise<IStore> => {
     const data = await readFileSync(storePath, 'utf-8');

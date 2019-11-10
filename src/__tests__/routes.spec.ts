@@ -1,6 +1,7 @@
 import request from 'supertest';
-import data from '../../store/reset.json';
 import app from '../server';
+
+const  data = require('../../store/reset.json');
 
 describe('GET / - a simple api endpoint', () => {
   it('gets the initial route message', async () => {
@@ -12,10 +13,18 @@ describe('GET / - a simple api endpoint', () => {
   });
 });
 
-describe('GET /puppies  - list of store puppies', () => {
-  it('gets them all damnit', async () => {
+describe('GET /puppies  - list of puppies in the store', () => {
+  it('gets all available puppies', async () => {
     const { status, body } = await request(app).get('/puppies');
     expect(status).toEqual(200);
     expect(body).toEqual(data.puppies);
+  });
+});
+
+describe('GET /puppy/:id', () => {
+  it('gets a puppy by id', async () => {
+    const { status, body } = await request(app).get('/puppy/2');
+    expect(status).toEqual(200);
+    expect(body).toEqual(data.puppies[1]);
   });
 });
