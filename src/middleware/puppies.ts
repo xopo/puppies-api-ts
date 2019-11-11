@@ -37,11 +37,26 @@ const getPuppies = async (_req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-const reStore = async (_req: Request, _res: Response, next: NextFunction) => {
-    const { puppies: restorePuppies } = await getStoreData(reStorePath);
-    writeStoreData(restorePuppies);
-    next();
-}
+const reStore = async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { puppies: restorePuppies } = await getStoreData(reStorePath);
+
+        writeStoreData(restorePuppies);
+
+        const message: IMessage = {
+            body: 'restore done successfully',
+            type: 'success'
+        };
+
+        res.locals = {
+            ...res.locals,
+            message
+        };
+        next();
+    } catch(er) {
+        console.log(er);
+    }
+};
 
 const getPuppy = async (req: Request, res: Response, next: NextFunction) => {
     try {
