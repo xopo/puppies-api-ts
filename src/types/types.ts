@@ -8,3 +8,8 @@ export interface IPuppy {
 export interface IStore {
     puppies: IPuppy[];
 }
+
+export interface IMessage {
+    type: 'error' | 'success';
+    body: string;
+}

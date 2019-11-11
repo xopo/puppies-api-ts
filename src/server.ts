@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import { getPuppies, getPuppy } from './middleware/puppies';
+import { deletePuppy, getPuppies, getPuppy, reStore } from './middleware/puppies';
 
 const app = express();
 
@@ -25,5 +25,20 @@ app.get('/puppy/:id', getPuppy, (_req, res) => {
 
     res.json(puppy);
 });
+
+app.delete('/puppy/:id', deletePuppy, (_req, res) => {
+    const { message } = res.locals;
+    const status = message.type === 'success' ?  204 : 404;
+
+    res.status(status).send(message);
+});
+
+app.post('/restore', reStore, (_req, res) => {
+    const { message } = res.locals;
+    const status = message.type === 'success' ?  204 : 404;
+
+    res.status(status).send(message);
+})
+
 
 export default app;

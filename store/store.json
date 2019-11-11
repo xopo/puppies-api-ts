@@ -3,37 +3,37 @@
         {
             "name": "tikki",
             "type": "biki",
-            "id" : 1,
+            "id": 1,
             "adopted": false
         },
         {
             "name": "aka",
             "type": "baka",
-            "id" : 2,
+            "id": 2,
             "adopted": false
         },
         {
             "name": "meke",
             "type": "beke",
-            "id" : 3,
+            "id": 3,
             "adopted": false
         },
         {
             "name": "lala",
             "type": "bala",
-            "id" : 4,
+            "id": 4,
             "adopted": true
         },
         {
             "name": "riki",
             "type": "piki",
-            "id" : 5,
+            "id": 5,
             "adopted": true
         },
         {
             "name": "beny",
             "type": "penny",
-            "id" : 6,
+            "id": 6,
             "adopted": false
         }
     ]
