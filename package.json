@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build": "rm -rf ./dist && ttsc",
-    "dev": "nodemon --watch src/**/* -e ts,json --exec node --inspect -r ts-node/register src/index.ts",
+    "dev": "nodecross-env  NODE_ENV=development tsnd --inspect --respawn src/main.tmon",
     "lint": "npm run lint:ts && npm run lint:eslint",
     "lint:ts": "tsc --noEmit",
     "lint:eslint": "eslint src/**/*.ts",

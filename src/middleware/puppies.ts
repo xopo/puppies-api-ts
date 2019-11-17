@@ -8,7 +8,7 @@ const readFileSync = util.promisify(fs.readFile);
 const storePath = path.join(__dirname, '/../../store/store.json');
 const reStorePath = path.join(__dirname, '/../../store/reset.json');
 
-const getStoreData = async (aPath=storePath): Promise<IStore> => {
+const getStoreData = async (aPath = storePath): Promise<IStore> => {
     const data = await readFileSync(aPath, 'utf-8');
     return JSON.parse(data);
 };
@@ -53,12 +53,30 @@ const reStore = async (_req: Request, res: Response, next: NextFunction) => {
             message
         };
         next();
-    } catch(er) {
+    } catch (er) {
         console.log(er);
     }
 };
 
 const getPuppy = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { params: { id } } = req;
+        if (id) {
+            const { puppies } = await getStoreData();
+            const puppy = puppies.find((apuppy) => apuppy.id === parseInt(id, 10));
+
+            res.locals = {
+                ...res.locals,
+                puppy
+            };
+            next();
+        }
+    } catch (er) {
+        console.log(er);
+    }
+};
+
+const adoptPuppy = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { params: { id } } = req;
         if (id) {
@@ -111,6 +129,7 @@ const deletePuppy = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 export {
+    adoptPuppy,
     deletePuppy,
     getPuppies,
     getPuppy,
