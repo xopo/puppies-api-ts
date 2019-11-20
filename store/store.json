@@ -4,13 +4,13 @@
             "name": "tikki",
             "type": "biki",
             "id": 1,
-            "adopted": false
+            "adopted": true
         },
         {
             "name": "aka",
             "type": "baka",
             "id": 2,
-            "adopted": false
+            "adopted": true
         },
         {
             "name": "meke",
@@ -23,18 +23,6 @@
             "type": "bala",
             "id": 4,
             "adopted": true
-        },
-        {
-            "name": "riki",
-            "type": "piki",
-            "id": 5,
-            "adopted": true
-        },
-        {
-            "name": "beny",
-            "type": "penny",
-            "id": 6,
-            "adopted": false
         }
     ]
 }

@@ -1,55 +1,60 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
-import { deletePuppy, getPuppies, getPuppy, reStore, adoptPuppy } from './middleware/puppies';
+import * as action from './middleware/puppies';
 
 const app = express();
-console.log('enable cors');
-// Aapp.use(cors());
-
-app.use(cors({ origin: 'http://localhost:3000' }));
-
+app.use(cors());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
 
+// app.use((req, res) => {
+//     console.log(req.body); 
+//     res.on("finish", () => {
+//       console.log(res);
+//     });
+//   });
+
 app.get('/', (_req, res) => {
     res.send('Hello Buba3!');
 });
 
-app.get('/puppies', getPuppies, (_req, res) => {
+app.get('/puppies', action.getPuppies, (_req, res) => {
     const { puppies } = res.locals;
 
     res.json(puppies);
 });
 
-app.get('/puppy/:id', getPuppy, (_req, res) => {
+app.get('/puppy/:id', action.getPuppy, (_req, res) => {
     const { puppy } = res.locals;
 
     res.json(puppy);
 });
 
-app.patch('/adoptPuppy/:id', adoptPuppy, (_req, res) => {
+app.delete('/puppy/:id', action.deletePuppy, (_req, res) => {
+    const { message } = res.locals;
+    const status = message.type === 'success' ?  204 : 404;
+
+    res.send(message.body).status(status);
+});
+
+app.post('/restore', action.reStore, (_req, res) => {
     const { message } = res.locals;
     const status = message.type === 'success' ?  204 : 404;
 
     res.status(status).send(message);
 });
 
-app.delete('/puppy/:id', deletePuppy, (_req, res) => {
-    const { message } = res.locals;
-    const status = message.type === 'success' ?  204 : 404;
+app.patch('/adoptPuppy/:id', action.adoptPuppy, (_req, res) => {
+    const { puppy } = res.locals;
+    const status = puppy ?  204 : 404;
 
-    res.status(status).send(message);
+    res.send(puppy).status(status);
 });
 
-app.post('/restore', reStore, (_req, res) => {
-    const { message } = res.locals;
-    const status = message.type === 'success' ?  204 : 404;
 
-    res.status(status).send(message);
-});
 
 export default app;
