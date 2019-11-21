@@ -58,6 +58,32 @@ const reStore = async (_req: Request, res: Response, next: NextFunction) => {
     }
 };
 
+const addPuppy = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { body: { name, type} } = req;
+        if (name.length && type.length) {
+            const { puppies } = await getStoreData();
+            const newId =  puppies.reduce((ac:number, pup:IPuppy) => pup.id > ac ? pup.id : ac, 0) + 1;
+            const newPuppy = { 
+                adopted: false,
+                id: newId,
+                name,
+                type
+            };
+            puppies.push(newPuppy);
+            await writeStoreData(puppies);
+
+            res.locals = {
+                ...res.locals,
+                newPuppy
+            };
+            next();
+        }
+    } catch (er) {
+        console.log(er);
+    }
+};
+
 const getPuppy = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { params: { id } } = req;
@@ -131,6 +157,7 @@ const deletePuppy = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 export {
+    addPuppy,
     adoptPuppy,
     deletePuppy,
     getPuppies,

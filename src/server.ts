@@ -34,6 +34,12 @@ app.get('/puppy/:id', action.getPuppy, (_req, res) => {
     res.json(puppy);
 });
 
+app.post('/puppy', action.addPuppy, (_req, res) => {
+    const { newPuppy } = res.locals;
+
+    res.json(newPuppy);
+});
+
 app.delete('/puppy/:id', action.deletePuppy, (_req, res) => {
     const { message } = res.locals;
     const status = message.type === 'success' ?  204 : 404;
